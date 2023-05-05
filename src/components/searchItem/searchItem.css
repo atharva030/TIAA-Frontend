@@ -108,10 +108,10 @@
   cursor: pointer;
   border-radius: 5px;
 }
-.siEvent{
+/* .siEvent{
   flex: auto;
   justify-content: center;
   align-items: center;
   height: 100vh;
   color: red;
-}
+} */
