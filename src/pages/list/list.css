@@ -3,6 +3,9 @@
   justify-content: center;
   margin-top: 53px;
 }
+input{
+  background-color: white !important;
+}
 
 .listWrapper {
   width: 100%;

@@ -7,7 +7,15 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 
+import Multiselect from 'multiselect-react-dropdown';
+
+
+
+
 const List = () => {
+
+
+
   const location = useLocation();
   // const [destination, setDestination] = useState(location.state.destination);
   // const [date, setDate] = useState(location.state.date);
@@ -16,12 +24,14 @@ const List = () => {
 
   return (
     <div>
+
+
       <Navbar />
       <Header  />
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
-            <h1 className="lsTitle">Search</h1>
+            <h3 className="lsTitle">Create Your Organization</h3>
             <div className="lsItem">
               <label>Destination</label>
               {/* <input placeholder={destination} type="text" /> */}
@@ -41,46 +51,99 @@ const List = () => {
               )}
             </div> */}
             <div className="lsItem">
-              <label>Options</label>
               <div className="lsOptions">
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
-                    Min price <small>per night</small>
+                    Ration Type 
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  {/* <input type="number" className="lsOptionInput" /> */}
+                  <Multiselect
+  isObject={false}
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={function noRefCheck(){}}
+  onSelect={function noRefCheck(){}}
+  options={[
+    'Yellow Card',
+    'Orange Card',
+    
+  ]}
+/>
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
-                    Max price <small>per night</small>
+                    Ration Details 
                   </span>
-                  <input type="number" className="lsOptionInput" />
+                  <Multiselect
+  isObject={false}
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={function noRefCheck(){}}
+  onSelect={function noRefCheck(){}}
+  options={[
+    'Wheat',
+    'Rice',
+    'Sugar',
+    'Oil',
+    'Tarmaric',
+  ]}
+/>
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    // placeholder={options.adult}
-                  />
+                  <span className="lsOptionText">Ration Schedule</span>
+                  <input type="datetime-local" name="" id="" />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    // placeholder={options.children}
-                  />
+                  <span className="lsOptionText">Ration Allocated </span>
+                  <Multiselect
+  isObject={false}
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={function noRefCheck(){}}
+  onSelect={function noRefCheck(){}}
+  options={[
+    '2 Kg',
+    '5 kg',
+    '10 kg',
+    '15 kg',
+  ]}
+/>
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    // placeholder={options.room}
-                  />
+                  <span className="lsOptionText">Ration Stock</span>
+                  <Multiselect
+  isObject={false}
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={function noRefCheck(){}}
+  onSelect={function noRefCheck(){}}
+  options={[
+    'Less than 100 Kg',
+    '200+ Kg',
+    '500+ Kg'
+    
+    
+  ]}
+/>
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Ration Provider</span>
+                  <Multiselect
+  isObject={false}
+  onKeyPressFn={function noRefCheck(){}}
+  onRemove={function noRefCheck(){}}
+  onSearch={function noRefCheck(){}}
+  onSelect={function noRefCheck(){}}
+  options={[
+    'Adwait Sharma',
+    'Nagpur'
+    
+  ]}
+/>
+                </div>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Ration Mfg/Exp</span>
+                  <input type="datetime-local" name="" id="" />
                 </div>
               </div>
             </div>
