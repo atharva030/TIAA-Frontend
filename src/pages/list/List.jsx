@@ -2,45 +2,55 @@ import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import Multiselect from 'multiselect-react-dropdown';
 
 const List = () => {
-  const location = useLocation();
-  // const [destination, setDestination] = useState(location.state.destination);
-  // const [date, setDate] = useState(location.state.date);
-  // const [openDate, setOpenDate] = useState(false);
-  // const [options, setOptions] = useState(location.state.options);
+  
+  const [status, setStatus] = useState([]);
+  const [selectDate, setselectDate] = useState("");
+  const [selectLocation, setselectLocation] = useState("");
+  console.log("List Component", selectDate);
+  const getEvents = async () => {
+    // setLoader(true);
+    const response = await fetch(
+      `http://localhost:5001/api/events/getevents?eventDate=${selectDate}&location=${selectLocation}`,
+      {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          // "auth-token": localStorage.getItem("token"),
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
+    const json = await response.json();
+    setStatus(json);
+    // setLoader(false);
+  };
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   return (
     <div>
       <Navbar />
-      <Header  />
+      <Header
+        setselectLocation={setselectLocation}
+        setselectDate={setselectDate}
+        getEvents={getEvents}
+      />
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
-            <label>Destination</label>
-              {/* <input placeholder={destination} type="text" /> */}
+              <label>Destination</label>
             </div>
-            {/* <div className="lsItem">
-              <label>Check-in Date</label>
-              <span onClick={() => setOpenDate(!openDate)}>{`${format(
-                date[0].startDate,
-                "MM/dd/yyyy"
-              )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
-              {openDate && (
-                <DateRange
-                  onChange={(item) => setDate([item.selection])}
-                  minDate={new Date()}
-                  ranges={date}
-                />
-              )}
-            </div> */}
+
             <div className="lsItem">
               <div className="lsOptions">
                 <div className="lsOptionItem">
@@ -141,16 +151,27 @@ const List = () => {
             <button>Search</button>
           </div>
           <div className="listResult">
-            <SearchItem organisationName="organisationName" />
-            {/* <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem /> */}
-          </div>
+            {status.length === 0 ? (
+              <div className="siFeatures">NO EVENTS FOUND</div>
+            ) : (
+              status.map((items) => (
+                <SearchItem
+                  organisationName={items.organisationName}
+                  rationType={items.rationType}
+                  rationSchedule={items.rationSchedule}
+                  rationProvider={items.rationProvider}
+                  eventDate={items.eventDate}
+                  rationAllocate={items.rationAllocate}
+                  rationSlots={items.rationSlots}
+                  rationMfg={items.rationMfg}
+                  rationExp={items.rationExp}
+                  location={items.location}
+                  date={items.date}
+                  rating={items.rating}
+                />
+              ))
+            )}
+            </div>
         </div>
       </div>
     </div>
