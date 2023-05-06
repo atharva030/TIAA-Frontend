@@ -8,32 +8,40 @@ import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 
 const List = () => {
-  const [status, setStatus] = useState([])
-  const [selectDate, setselectDate] = useState("")
-  const [selectLocation, setselectLocation] = useState("")
- console.log("List Component",selectDate)
+  
+  const [status, setStatus] = useState([]);
+  const [selectDate, setselectDate] = useState("");
+  const [selectLocation, setselectLocation] = useState("");
+  console.log("List Component", selectDate);
   const getEvents = async () => {
     // setLoader(true);
-    const response = await fetch(`http://localhost:5001/api/events/getevents?eventDate=${selectDate}&location=${selectLocation}`, {
-      method: "GET", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json",
-        // "auth-token": localStorage.getItem("token"),
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5001/api/events/getevents?eventDate=${selectDate}&location=${selectLocation}`,
+      {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          // "auth-token": localStorage.getItem("token"),
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
     const json = await response.json();
     setStatus(json);
     // setLoader(false);
   };
-useEffect(() => {
-  getEvents();  
-}, [])
+  useEffect(() => {
+    getEvents();
+  }, []);
 
   return (
     <div>
       <Navbar />
-      <Header  setselectLocation={setselectLocation} setselectDate={setselectDate} getEvents={getEvents}/>
+      <Header
+        setselectLocation={setselectLocation}
+        setselectDate={setselectDate}
+        getEvents={getEvents}
+      />
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
@@ -41,7 +49,7 @@ useEffect(() => {
             <div className="lsItem">
               <label>Destination</label>
             </div>
-           
+
             <div className="lsItem">
               <label>Options</label>
               <div className="lsOptions">
@@ -90,28 +98,25 @@ useEffect(() => {
           </div>
           <div className="listResult">
             {status.length === 0 ? (
-                        (
-
-                           <div className="siFeatures">NO EVENTS FOUND</div>
-                        )
-                    ) : (
-                        status.map((items) => (
-                            <SearchItem
-                            organisationName={items.organisationName} 
-                            rationType={items.rationType} 
-                            rationSchedule= {items.rationSchedule} 
-                            rationProvider= {items.rationProvider}
-                            eventDate= {items.eventDate}
-                            rationAllocate={items.rationAllocate}
-                            rationSlots= {items.rationSlots}
-                            rationMfg={items.rationMfg}
-                            rationExp={items.rationExp}
-                            location= {items.location}
-                            date={items.date}
-                            rating={items.rating}
-                            />
-                        ))
-                    )}
+              <div className="siFeatures">NO EVENTS FOUND</div>
+            ) : (
+              status.map((items) => (
+                <SearchItem
+                  organisationName={items.organisationName}
+                  rationType={items.rationType}
+                  rationSchedule={items.rationSchedule}
+                  rationProvider={items.rationProvider}
+                  eventDate={items.eventDate}
+                  rationAllocate={items.rationAllocate}
+                  rationSlots={items.rationSlots}
+                  rationMfg={items.rationMfg}
+                  rationExp={items.rationExp}
+                  location={items.location}
+                  date={items.date}
+                  rating={items.rating}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
