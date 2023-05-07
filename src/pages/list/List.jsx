@@ -7,9 +7,34 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import Multiselect from 'multiselect-react-dropdown';
+import Select from 'react-select';
 
 const List = () => {
+
+  const Allocated = [
+    { label: '2 Kg', value: '2 Kg' },
+    { label: '5 Kg', value: '5 Kg' },
+    { label: '10 Kg', value: '10 Kg' },
+  ];
+
+  const Stock = [
+    { label: 'Less than 100 Kg', value: 'Less than 100 Kg' },
+    { label: '200+ Kg', value: '200+ Kg' },
+    { label: '500+ Kg', value: '500+ Kg' },
+  ];
+  const Provider = [
+    { label: 'Akash', value: 'Akash' },
+    { label: 'Prakash', value: 'Prakash' },
+    { label: 'Rajesh', value: 'Rajesh' },
+  ];
   
+  const handleChange = selectedOption => {
+    console.log(`Selected option: ${selectedOption.label}`);
+  };
+
+  const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
+  
+
   const [status, setStatus] = useState([]);
   const [selectDate, setselectDate] = useState("");
   const [selectLocation, setselectLocation] = useState("");
@@ -92,59 +117,44 @@ const List = () => {
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Ration Schedule</span>
-                  <input type="datetime-local" name="" id="" />
+                  <input
+                  type="date"
+                  className="headerSearchText"
+                  value={date}
+                  min={format(new Date(), "yyyy-MM-dd")}
+                  onChange={(e) =>{ setDate(e.target.value)}}
+                 />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Ration Allocated </span>
-                  <Multiselect
-  isObject={false}
-  onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
-  onSearch={function noRefCheck(){}}
-  onSelect={function noRefCheck(){}}
-  options={[
-    '2 Kg',
-    '5 kg',
-    '10 kg',
-    '15 kg',
-  ]}
-/>
+                  <Select
+      options={Allocated}
+      onChange={handleChange}
+      placeholder="Select"/>
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Ration Stock</span>
-                  <Multiselect
-  isObject={false}
-  onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
-  onSearch={function noRefCheck(){}}
-  onSelect={function noRefCheck(){}}
-  options={[
-    'Less than 100 Kg',
-    '200+ Kg',
-    '500+ Kg'
-    
-    
-  ]}
-/>
+                  <Select
+      options={Stock}
+      onChange={handleChange}
+      placeholder="Select"/>
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Ration Provider</span>
-                  <Multiselect
-  isObject={false}
-  onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
-  onSearch={function noRefCheck(){}}
-  onSelect={function noRefCheck(){}}
-  options={[
-    'Adwait Sharma',
-    'Nagpur'
-    
-  ]}
-/>
+                  <Select
+      options={Provider}
+      onChange={handleChange}
+      placeholder="Select"/>
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Ration Mfg/Exp</span>
-                  <input type="datetime-local" name="" id="" />
+                  <input
+                  type="date"
+                  className="headerSearchText"
+                  value={date}
+                  min={format(new Date(), "yyyy-MM-dd")}
+                  onChange={(e) =>{ setDate(e.target.value)}}
+                 />
                 </div>
               </div>
             </div>

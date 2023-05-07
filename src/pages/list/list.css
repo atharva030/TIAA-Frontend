@@ -9,6 +9,18 @@
   max-width: 1024px;
   display: flex;
   gap: 20px;
+  background-color: white;
+}
+
+.searchWrapper {
+  border: 1px solid #000000;
+  background-color: white;
+  width: 130Px;
+}
+input{
+  border: 1px solid #000000;
+  background-color: white;
+  width: 130Px;
 }
 
 .listSearch {
@@ -79,5 +91,8 @@
 }
 
 .listResult {
-  flex: 3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
 }
