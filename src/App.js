@@ -12,6 +12,8 @@ import Login from "./components/Login/Login";
 import './index.css'
 import { useState } from "react";
 import Register from "./components/Register/Register";
+import Slots from "./pages/Slots/Slots";
+import History from "./pages/History/history";
 function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,8 +42,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<List/>}/>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/home" element={<List/>}/>
+        <Route path="/register" element={<Register/>}/>
+
+
         <Route path="/hotels/:id" element={<Hotel/>}/>
+        <Route path="/slots" element={<Slots/>}/>
+        <Route path="/history" element={<History/>}/>
+
+
+        
       </Routes>
       <MailList/>
       <Footer/>

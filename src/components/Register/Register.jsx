@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
+import './Register.css'
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     // validate email and password
@@ -27,9 +27,10 @@ const Register = () => {
   };
 
   return (
-    <div class="container" id="container">
+    <div className="global-container">
+        <div class="container" id="container">
       <div class="form-container sign-in-container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-style">
           <h1>Register Now</h1>
           {errors.email && <p className="error">{errors.email}</p>}
           <input
@@ -75,6 +76,8 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </div>
+  
   );
 };
 

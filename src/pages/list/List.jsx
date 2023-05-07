@@ -2,7 +2,7 @@ import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
@@ -39,6 +39,11 @@ const List = () => {
   const [selectDate, setselectDate] = useState("");
   const [selectLocation, setselectLocation] = useState("");
   console.log("List Component", selectDate);
+
+  const bookSlot=()=>{
+    console.log(slot)
+    // console.log("presses")
+  }
   const getEvents = async () => {
     // setLoader(true);
     const response = await fetch(
@@ -57,7 +62,7 @@ const List = () => {
     // setLoader(false);
   };
   useEffect(() => {
-    getEvents();
+    // getEvents();
   }, []);
 
   return (
@@ -79,41 +84,27 @@ const List = () => {
             <div className="lsItem">
               <div className="lsOptions">
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Ration Type 
-                  </span>
+                  <span className="lsOptionText">Ration Type</span>
                   {/* <input type="number" className="lsOptionInput" /> */}
                   <Multiselect
-  isObject={false}
-  onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
-  onSearch={function noRefCheck(){}}
-  onSelect={function noRefCheck(){}}
-  options={[
-    'Yellow Card',
-    'Orange Card',
-    
-  ]}
-/>
+                    isObject={false}
+                    onKeyPressFn={function noRefCheck() {}}
+                    onRemove={function noRefCheck() {}}
+                    onSearch={function noRefCheck() {}}
+                    onSelect={function noRefCheck() {}}
+                    options={["Yellow Card", "Orange Card"]}
+                  />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">
-                    Ration Details 
-                  </span>
+                  <span className="lsOptionText">Ration Details</span>
                   <Multiselect
-  isObject={false}
-  onKeyPressFn={function noRefCheck(){}}
-  onRemove={function noRefCheck(){}}
-  onSearch={function noRefCheck(){}}
-  onSelect={function noRefCheck(){}}
-  options={[
-    'Wheat',
-    'Rice',
-    'Sugar',
-    'Oil',
-    'Tarmaric',
-  ]}
-/>
+                    isObject={false}
+                    onKeyPressFn={function noRefCheck() {}}
+                    onRemove={function noRefCheck() {}}
+                    onSearch={function noRefCheck() {}}
+                    onSelect={function noRefCheck() {}}
+                    options={["Wheat", "Rice", "Sugar", "Oil", "Tarmaric"]}
+                  />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Ration Schedule</span>
@@ -178,10 +169,13 @@ const List = () => {
                   location={items.location}
                   date={items.date}
                   rating={items.rating}
+                  id={items._id}
+                  setslot={setslot}
+                  bookSlot={bookSlot}
                 />
               ))
             )}
-            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,8 +1,14 @@
 import "./searchItem.css";
 
 const SearchItem = (props) => {
+  const handleSlot=(id)=>{
+    props.setslot(id)
+    props.bookSlot();
+  }
   return (
+    
     <div className="searchItem">
+
       <div className="siDesc">
         <h1 className="siTitle">{props.organisationName}</h1>
         <span className="siDistance">{props.rationType}</span>
@@ -26,7 +32,7 @@ const SearchItem = (props) => {
         <div className="siDetailTexts">
           {/* <span className="siPrice">$112</span> */}
           <span className="siTaxOp">{props.rationSlots} slots are available </span>
-          <button className="siCheckButton">Book Slots</button>
+          <button className="siCheckButton" onClick={()=>handleSlot(props.id)}>Book Slots</button>
         </div>
       </div>
     </div>
