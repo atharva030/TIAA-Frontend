@@ -44,7 +44,7 @@ const Login = () => {
 		</form>
 	</div> */}
       <div class="form-container sign-in-container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-style">
           <h1>Sign in</h1>
           {/* <span>or use your account</span> */}
           {errors.email && <p className="error">{errors.email}</p>}
@@ -61,6 +61,7 @@ const Login = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
           {errors.password && <p className="error">{errors.password}</p>}
+          <p>Dont have an Account? Create New</p>
           <a href="#">Forgot your password?</a>
           <button type="submit" className="hover-btn">Login</button>
         </form>
@@ -79,9 +80,7 @@ const Login = () => {
           <div class="overlay-panel overlay-right">
             <h1>Hello, Friend!</h1>
             <p>Enter your personal details and start journey with us</p>
-            <button class="ghost" id="signUp">
-              Sign Up
-            </button>
+            
           </div>
         </div>
       </div>

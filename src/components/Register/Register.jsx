@@ -29,7 +29,7 @@ const Register = () => {
   return (
     <div class="container" id="container">
       <div class="form-container sign-in-container">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-style">
           <h1>Register Now</h1>
           {errors.email && <p className="error">{errors.email}</p>}
           <input

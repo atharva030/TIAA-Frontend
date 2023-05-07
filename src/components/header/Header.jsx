@@ -11,7 +11,7 @@ import "./header.css";
 import { useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-
+  
 const Header = (props) => {
   const cities = [  
     
