@@ -27,7 +27,8 @@ const Login = () => {
   };
 
   return (
-    <div class="container" id="container">
+    <div className="global-container">
+          <div class="container" id="container">
       {/* <div class="form-container sign-up-container">
 		<form action="#">
 			<h1>Create Account</h1>
@@ -43,8 +44,8 @@ const Login = () => {
 			<button>Sign Up</button>
 		</form>
 	</div> */}
-      <div class="form-container sign-in-container">
-        <form onSubmit={handleSubmit} className="form-style">
+      <div className="form-container sign-in-container">
+        <form onSubmit={handleSubmit}>
           <h1>Sign in</h1>
           {/* <span>or use your account</span> */}
           {errors.email && <p className="error">{errors.email}</p>}
@@ -66,7 +67,7 @@ const Login = () => {
           <button type="submit" className="hover-btn">Login</button>
         </form>
       </div>
-      <div class="overlay-container">
+      <div className="overlay-container">
         <div class="overlay">
           <div class="overlay-panel overlay-left">
             <h1>Welcome Back!</h1>
@@ -85,6 +86,8 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </div>
+
   );
 };
 

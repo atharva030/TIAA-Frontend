@@ -1,11 +1,17 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Unbounded:wght@400;500;600&display=swap');
 
-* {
-	box-sizing: border-box;
+.global-container{
+	background: #f6f5f7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+    font-family: 'Poppins', sans-serif;
+	height: 100vh;
+	margin: -20px 0 50px; 
 }
-
-body {
+/* body {
 	background: #f6f5f7;
 	display: flex;
 	justify-content: center;
@@ -14,10 +20,12 @@ body {
     font-family: 'Poppins', sans-serif;
 	height: 100vh;
 	margin: -20px 0 50px;
-}
+} */
 h1 {
 	font-weight: bold;
 	margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
 h2 {
@@ -36,15 +44,15 @@ span {
 	font-size: 12px;
 }
 
-a {
+/* a {
 	color: blue;
     font-size: 14px;
     text-decoration: underline;
     margin: 15px 0;
-}
+} */
 
 
-button {
+.container button {
 	border-radius: 20px;
 	border: 1px solid #FF4B2B;
 	background-color: #FF4B2B;
@@ -88,7 +96,8 @@ input {
 	border: none;
 	padding: 12px 15px;
 	margin: 8px 0;
-	width: 100%;
+	width: 90%;
+
 }
 select {
 	background-color: #eee;
@@ -121,6 +130,9 @@ select {
 	left: 0;
 	width: 50%;
 	z-index: 2;
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container.right-panel-active .sign-in-container {
@@ -194,7 +206,7 @@ select {
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-	padding: 0 40px;
+	/* padding: 0 40px; */
 	text-align: center;
 	top: 0;
 	height: 100%;
@@ -258,4 +270,12 @@ footer i {
 footer a {
     color: #3c97bf;
     text-decoration: none;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 75px;
+	width: 90%;
 }

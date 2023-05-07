@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import './Register.css'
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +27,8 @@ const Register = () => {
   };
 
   return (
-    <div class="container" id="container">
+    <div className="global-container">
+        <div class="container" id="container">
       <div class="form-container sign-in-container">
         <form onSubmit={handleSubmit} className="form-style">
           <h1>Register Now</h1>
@@ -75,6 +76,8 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </div>
+  
   );
 };
 

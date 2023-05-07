@@ -5,13 +5,18 @@ import {
   faPerson,
   faPlane,
   faTaxi,
+  faHome,
+  faInfo,
+  faHistory,
+  faList,
+  
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { useState } from "react";
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
-  
+import { Link } from "react-router-dom";
+
 const Header = (props) => {
   const cities = [  
     
@@ -112,25 +117,29 @@ const {type, setselectLocation ,setselectDate,getEvents}=props
         }
       >
         <div className="headerList">
+          <Link to="/home">
           <div className="headerListItem active">
-            <FontAwesomeIcon icon={faBed} />
-            <span>Stays</span>
+            <FontAwesomeIcon icon={faHome} />
+            <span>Home</span>
           </div>
+          </Link>
+
+          <Link to='/slots'>
           <div className="headerListItem">
-            <FontAwesomeIcon icon={faPlane} />
-            <span>Flights</span>
+            <FontAwesomeIcon icon={faList} />
+            <span>Slots</span>
           </div>
-          <div className="headerListItem">
-            <FontAwesomeIcon icon={faCar} />
-            <span>Car rentals</span>
+          </Link>
+          <Link to='/history'>
+            <div className="headerListItem">
+            <FontAwesomeIcon icon={faHistory} />
+            <span>History</span>
           </div>
+          </Link>
+
           <div className="headerListItem">
-            <FontAwesomeIcon icon={faBed} />
-            <span>Attractions</span>
-          </div>
-          <div className="headerListItem">
-            <FontAwesomeIcon icon={faTaxi} />
-            <span>Airport taxis</span>
+            <FontAwesomeIcon icon={faInfo} />
+            <span>About</span>
           </div>
         </div>
         {type !== "list" && (
@@ -142,7 +151,7 @@ const {type, setselectLocation ,setselectDate,getEvents}=props
               Get rewarded for your travels – unlock instant savings of 10% or
               more with a free Lamabooking account
             </p>
-            <button className="headerBtn">Sign in / Register</button>
+            {/* <button className="headerBtn">Sign in / Register</button> */}
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />

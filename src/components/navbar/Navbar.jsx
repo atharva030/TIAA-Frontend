@@ -6,11 +6,10 @@ const Navbar = () => {
       <div className="navContainer">
         <span className="logo">lamabooking</span>
         <div className="navItems">
-          <button className="navButton" >Home</button>
-          <button className="navButton">About</button>
-          <button className="navButton">Book Slot</button>
-          <button className="navButton">History</button>
-          <button className="navButton">Logout</button>
+          <button className="navButton"
+          onClick={()=>{localStorage.clear()}}
+          >Logout</button>
+          
         </div>
       </div>
     </div>
