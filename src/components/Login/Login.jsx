@@ -22,7 +22,7 @@ const Login = () => {
     setErrors(validationErrors);
     // submit form if no errors
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted");
+      console.log(JSON.stringify({ email, password }));
     }
   };
 
@@ -55,6 +55,14 @@ const Login = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
+           <select required>
+            <option value="" disabled selected>
+              select your role
+            </option>
+            <option value="ROLE_ORG">Organisation</option>
+            <option value="ROLE_USER">Ration User</option>
+          </select>
+
           <input
             type="password"
             placeholder="Password"
@@ -62,7 +70,7 @@ const Login = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
           {errors.password && <p className="error">{errors.password}</p>}
-          <p>Dont have an Account? Create New</p>
+          <p>Dont have an Account? <a href ="/register">Create New</a> </p>
           <a href="#">Forgot your password?</a>
           <button type="submit" className="hover-btn">Login</button>
         </form>

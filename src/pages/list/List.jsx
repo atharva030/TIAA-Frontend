@@ -33,7 +33,7 @@ const List = () => {
   };
 
   const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
-  
+  const [slot , setslot] =useState()
 
   const [status, setStatus] = useState([]);
   const [selectDate, setselectDate] = useState("");
@@ -80,7 +80,6 @@ const List = () => {
             <div className="lsItem">
               <label>Destination</label>
             </div>
-
             <div className="lsItem">
               <div className="lsOptions">
                 <div className="lsOptionItem">

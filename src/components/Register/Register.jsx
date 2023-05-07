@@ -22,7 +22,7 @@ const Register = () => {
     setErrors(validationErrors);
     // submit form if no errors
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted");
+      console.log(JSON.stringify({ email, password, }));
     }
   };
 
@@ -41,7 +41,7 @@ const Register = () => {
           />
           <select required>
             <option value="" disabled selected>
-              Who are You?
+              select your role
             </option>
             <option value="ROLE_ORG">Organisation</option>
             <option value="ROLE_USER">Ration User</option>
@@ -53,7 +53,7 @@ const Register = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
           {errors.password && <p className="error">{errors.password}</p>}
-         <p>Already have an Account?<a href="#"> Sign In</a></p> 
+         <p>Already have an Account?<a href="/"> Sign In</a></p> 
           <button type="submit" className="hover-btn">Register</button>
         </form>
       </div>
