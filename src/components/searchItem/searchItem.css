@@ -108,10 +108,39 @@
   cursor: pointer;
   border-radius: 5px;
 }
-/* .siEvent{
-  flex: auto;
+
+
+.tick {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background: green;
+  border-radius: 50%;
+  animation: tick 0.5s ease-in-out;
+}
+.tick-image {
+  width: 54px;
+  height: 54px;
+  background-image: url('/Users/TIAA/tiaa_v9/TIAA-Frontend/asset/—Pngtree—tick vector icon_4015270.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: tick 0.5s ease-in-out;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: red;
-} */
+    align-items: center;
+    margin: auto;
+  border: 1px solid ;
+  border-radius: 100%;
+}
+.modal-modal-description{
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+}
+.sucess{
+  display: flex;
+    font-size: medium;
+    height: 5vh;
+    align-items: center;
+    font-size: 28px;
+}
