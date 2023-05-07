@@ -38,16 +38,21 @@ function App() {
     }
   };
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     <Route path="/" element={<List/>}/>
-    //     <Route path="/hotels/:id" element={<Hotel/>}/>
-    //   </Routes>
-    //   <MailList/>
-    //   <Footer/>
-    // </BrowserRouter>
-    // <Login />
-    <Register/> 
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<List/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+
+
+        <Route path="/hotels/:id" element={<Hotel/>}/>
+        
+      </Routes>
+      <MailList/>
+      <Footer/>
+    </BrowserRouter>
+      // <Login/>
+// {/* <Register/> */}
 
 
   );
