@@ -32,7 +32,7 @@ const SearchItem = (props) => {
         <div className="siDetailTexts">
           {/* <span className="siPrice">$112</span> */}
           <span className="siTaxOp">{props.rationSlots} slots are available </span>
-          <button className="siCheckButton" onClick={()=>handleSlot(props.id)}>Book Slots</button>
+          {localStorage.getItem("role")==="ROLE_ADMIN"?"":<button className="siCheckButton" onClick={()=>handleSlot(props.id)}>Book Slots</button>}
         </div>
       </div>
     </div>

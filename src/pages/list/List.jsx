@@ -1,49 +1,135 @@
 import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
-import Multiselect from 'multiselect-react-dropdown';
-import Select from 'react-select';
-
+import Multiselect from "multiselect-react-dropdown";
+import Select from "react-select";
+import { useNavigate } from "react-router-dom";
 const List = () => {
-
-  const Allocated = [
-    { label: '2 Kg', value: '2 Kg' },
-    { label: '5 Kg', value: '5 Kg' },
-    { label: '10 Kg', value: '10 Kg' },
+  const cities = [
+    {
+      name: "Ahmednagar",
+      towns: ["Ahmednagar", "Sangamner", "Rahuri", "Shrirampur"],
+    },
+    {
+      name: "Akola",
+      towns: ["Akola", "Murtizapur", "Patur", "Balapur"],
+    },
+    {
+      name: "Amravati",
+      towns: ["Amravati", "Achalpur", "Morshi", "Warud"],
+    },
+    {
+      name: "Aurangabad",
+      towns: ["Aurangabad", "Paithan", "Gangapur", "Khuldabad"],
+    },
+    {
+      name: "Beed",
+      towns: ["Beed", "Georai", "Ashti", "Kaij"],
+    },
+    {
+      name: "Bhandara",
+      towns: ["Bhandara", "Tumsar", "Sakoli", "Pauni"],
+    },
+    {
+      name: "Buldhana",
+      towns: ["Buldhana", "Malkapur", "Shegaon", "Khamgaon"],
+    },
+    {
+      name: "Chandrapur",
+      towns: ["Chandrapur", "Ballarpur", "Rajura", "Warora"],
+    },
+    {
+      name: "Dhule",
+      towns: ["Dhule", "Shirpur", "Sindkheda", "Sakri"],
+    },
+    {
+      name: "Gadchiroli",
+      towns: ["Gadchiroli", "Armori", "Aheri", "Mulchera"],
+    },
+    {
+      name: "Gondia",
+      towns: ["Gondia", "Tirora", "Amgaon", "Deori"],
+    },
+    {
+      name: "Hingoli",
+      towns: ["Hingoli", "Kalamnuri", "Sengaon", "Basmath"],
+    },
+    {
+      name: "Jalgaon",
+      towns: ["Jalgaon", "Bhusawal", "Yawal", "Raver"],
+    },
+    {
+      name: "Jalna",
+      towns: ["Jalna", "Ambad", "Bhokardan", "Badnapur"],
+    },
+    {
+      name: "Kolhapur",
+      towns: ["Kolhapur", "Karvir", "Gadhinglaj", "Panhala"],
+    },
+    {
+      name: "Latur",
+      towns: ["Latur", "Ahmadpur", "Udgir", "Nilanga"],
+    },
+    {
+      name: "Mumbai",
+      towns: ["Mumbai", "Navi Mumbai", "Thane", "Mira-Bhayandar"],
+    },
+    {
+      name: "Nagpur",
+      towns: ["Nagpur", "Kamthi", "Ramtek", "Umred"],
+    },
+    {
+      name: "Nanded",
+      towns: ["Nanded", "Mudkhed", "Bhokar", "Mukhed"],
+    },
   ];
-
-  const Stock = [
-    { label: 'Less than 100 Kg', value: 'Less than 100 Kg' },
-    { label: '200+ Kg', value: '200+ Kg' },
-    { label: '500+ Kg', value: '500+ Kg' },
-  ];
-  const Provider = [
-    { label: 'Akash', value: 'Akash' },
-    { label: 'Prakash', value: 'Prakash' },
-    { label: 'Rajesh', value: 'Rajesh' },
-  ];
-  
-  const handleChange = selectedOption => {
-    console.log(`Selected option: ${selectedOption.label}`);
-  };
-
   const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
-  
-
   const [status, setStatus] = useState([]);
   const [selectDate, setselectDate] = useState("");
+  const [slot, setslot] = useState("");
   const [selectLocation, setselectLocation] = useState("");
+  let navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    organisationName: "",
+    rationType: [],
+    rationDetails: [],
+    rationSchedule: "",
+    rationAllocate: "",
+    rationStock: "",
+    rationProvider: "",
+    rationMfg: "",
+    rationExp: "",
+    location: "",
+    eventDate: "",
+    rationSlots:""
+  });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    const response = await fetch(`http://localhost:5001/api/events/addevent`, {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(formData), // body data type must match "Content-Type" header
+    });
+    const addedEvent = await response.json();
+    console.log("Backend Message",addedEvent)
+    // setNotes(notes.concat(note)); //concat returns an array whereas push updates an array
+    // setLoader(false);
+  };
+
   console.log("List Component", selectDate);
 
-  const bookSlot=()=>{
-    console.log(slot)
+  const bookSlot = () => {
+    console.log(slot);
     // console.log("presses")
-  }
+  };
   const getEvents = async () => {
     // setLoader(true);
     const response = await fetch(
@@ -61,8 +147,15 @@ const List = () => {
     setStatus(json);
     // setLoader(false);
   };
+
   useEffect(() => {
-    // getEvents();
+    if (localStorage.getItem("token")) {
+      console.log("Senddd");
+      getEvents();
+    } else {
+      console.log("You are not logged in");
+      navigate("/");
+    }
   }, []);
 
   return (
@@ -75,82 +168,207 @@ const List = () => {
       />
       <div className="listContainer">
         <div className="listWrapper">
-          <div className="listSearch">
-            <h1 className="lsTitle">Search</h1>
-            <div className="lsItem">
-              <label>Destination</label>
-            </div>
+          {localStorage.getItem("role") === "ROLE_USER" ? (
+            ""
+          ) : (
+            <form className="listSearch" onSubmit={handleSubmit}>
+              <h1 className="lsTitle">Search</h1>
+              <div className="lsItem">
+                <label>Destination</label>
+              </div>
 
-            <div className="lsItem">
-              <div className="lsOptions">
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Type</span>
-                  {/* <input type="number" className="lsOptionInput" /> */}
-                  <Multiselect
-                    isObject={false}
-                    onKeyPressFn={function noRefCheck() {}}
-                    onRemove={function noRefCheck() {}}
-                    onSearch={function noRefCheck() {}}
-                    onSelect={function noRefCheck() {}}
-                    options={["Yellow Card", "Orange Card"]}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Details</span>
-                  <Multiselect
-                    isObject={false}
-                    onKeyPressFn={function noRefCheck() {}}
-                    onRemove={function noRefCheck() {}}
-                    onSearch={function noRefCheck() {}}
-                    onSelect={function noRefCheck() {}}
-                    options={["Wheat", "Rice", "Sugar", "Oil", "Tarmaric"]}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Schedule</span>
-                  <input
-                  type="date"
-                  className="headerSearchText"
-                  value={date}
-                  min={format(new Date(), "yyyy-MM-dd")}
-                  onChange={(e) =>{ setDate(e.target.value)}}
-                 />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Allocated </span>
-                  <Select
-      options={Allocated}
-      onChange={handleChange}
-      placeholder="Select"/>
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Stock</span>
-                  <Select
-      options={Stock}
-      onChange={handleChange}
-      placeholder="Select"/>
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Provider</span>
-                  <Select
-      options={Provider}
-      onChange={handleChange}
-      placeholder="Select"/>
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Ration Mfg/Exp</span>
-                  <input
-                  type="date"
-                  className="headerSearchText"
-                  value={date}
-                  min={format(new Date(), "yyyy-MM-dd")}
-                  onChange={(e) =>{ setDate(e.target.value)}}
-                 />
+              <div className="lsItem">
+                <div className="lsOptions">
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Type</span>
+                    {/* <input type="number" className="lsOptionInput" /> */}
+                    <Multiselect
+                      isObject={false}
+                      onKeyPressFn={function noRefCheck() {}}
+                      onRemove={(e) => {
+                        setFormData({ ...formData, rationType: e });
+                      }}
+                      onSearch={function noRefCheck() {}}
+                      onSelect={(e) => {
+                        setFormData({ ...formData, rationType: e });
+                      }}
+                      required
+                      options={["Yellow Card", "Orange Card"]}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Details</span>
+                    <Multiselect
+                      isObject={false}
+                      onKeyPressFn={function noRefCheck() {}}
+                      onRemove={(e) => {
+                        setFormData({ ...formData, rationDetails: e });
+                      }}
+                      onSearch={function noRefCheck() {}}
+                      onSelect={(e) => {
+                        setFormData({ ...formData, rationDetails: e });
+                      }}
+                      options={["Wheat", "Rice", "Sugar", "Oil", "Tarmaric"]}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Number of Slots</span>
+                    <input
+                      type="text"
+                      id="organisationName"
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          rationSlots: e.target.value,
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Organisation name</span>
+                    <input
+                      type="text"
+                      id="organisationName"
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          organisationName: e.target.value,
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Schedule</span>
+                    <input
+                      type="date"
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          rationSchedule: e.target.value,
+                        });
+                      }}
+                      name=""
+                      id=""
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Allocated </span>
+                    <Select
+                      options={[
+                        { value: "2 Kg", label: "2 Kg" },
+                        { value: "5 kg", label: "5 kg" },
+                        { value: "10 kg", label: "10 kg" },
+                        { value: "15 kg", label: "15 kg" },
+                      ]}
+                      value={{
+                        value: formData.rationAllocate,
+                        label: formData.rationAllocate,
+                      }}
+                      onChange={(selectedOption) => {
+                        setFormData({
+                          ...formData,
+                          rationAllocate: selectedOption.value,
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Stock</span>
+                    <select
+                      value={formData.rationStock}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          rationStock: e.target.value,
+                        });
+                      }}
+                    >
+                      <option value="">Select an option</option>
+                      {["Less than 100 Kg", "200+ Kg", "500+ Kg"].map(
+                        (option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Location</span>
+                    <select
+                      value={formData.location}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          location: e.target.value,
+                        });
+                      }}
+                    >
+                      <option value="">Select a city</option>
+                      {cities.map((city) => (
+                        <optgroup key={city.name} label={city.name}>
+                          {city.towns.map((town) => (
+                            <option key={town} value={`${town}, ${city.name}`}>
+                              {town}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Provider</span>
+                    <select
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          rationProvider: e.target.value,
+                        });
+                      }}
+                    >
+                      <option value="">Select an option</option>
+                      <option value="Adwait Sharma">Adwait Sharma</option>
+                      <option value="Nagpur">Nagpur</option>
+                    </select>
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Mfg</span>
+                    <input
+                      type="date"
+                      onChange={(e) => {
+                        setFormData({ ...formData, rationMfg: e.target.value });
+                      }}
+                      name=""
+                      id=""
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Ration Exp</span>
+                    <input
+                      type="date"
+                      onChange={(e) => {
+                        setFormData({ ...formData, rationExp: e.target.value });
+                      }}
+                      name=""
+                      id=""
+                    />
+                  </div>
+                  <div className="lsOptionItem">
+                    <span className="lsOptionText">Event Date</span>
+                    <input
+                      type="date"
+                      onChange={(e) => {
+                        setFormData({ ...formData, eventDate: e.target.value });
+                      }}
+                      name=""
+                      id=""
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <button>Search</button>
-          </div>
+              <button>Search</button>
+            </form>
+          )}
           <div className="listResult">
             {status.length === 0 ? (
               <div className="siFeatures">NO EVENTS FOUND</div>
