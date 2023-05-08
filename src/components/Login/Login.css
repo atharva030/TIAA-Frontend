@@ -54,8 +54,8 @@ span {
 
 .container button {
 	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
+	border: 1px solid #01357f;;
+	background-color: #01357f;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -226,6 +226,7 @@ select {
 .overlay-right {
 	right: 0;
 	transform: translateX(0);
+	background-color: #01357f;
 }
 
 .container.right-panel-active .overlay-right {
