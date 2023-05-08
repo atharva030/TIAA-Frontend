@@ -88,7 +88,7 @@ const Login = () => {
             />
             {errors.password && <p className="error">{errors.password}</p>}
             <p>
-              Dont have an Account? <a href="/register">Create New</a>{" "}
+              Dont have an Account? <a href="/register">Create New</a>
             </p>
             <a href="#">Forgot your password?</a>
             <button type="submit" className="hover-btn">
