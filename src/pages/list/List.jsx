@@ -322,10 +322,10 @@ const List = () => {
             ""
           ) : (
             <form className="listSearch" onSubmit={handleSubmit}>
-              <h1 className="lsTitle">Search</h1>
-              <div className="lsItem">
+              <h1 className="lsTitle">Create Your Event</h1>
+              {/* <div className="lsItem">
                 <label>Destination</label>
-              </div>
+              </div> */}
 
               <div className="lsItem">
                 <div className="lsOptions">
@@ -530,7 +530,7 @@ const List = () => {
                   </div>
                 </div>
               </div>
-              <button>Search</button>
+              <button>Add Event</button>
             </form>
           )}
           <div className="listResult">
