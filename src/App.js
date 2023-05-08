@@ -58,12 +58,12 @@ function App() {
       {/* Footer */}
       <Footer />
     </BrowserRouter>
-//     {/* <BrowserRouter>
-//     <Routes>
-// <Route path="/" element={<List />} />
-// <Route path="/slots" element={<Slots />} />
-// </Routes>
-// </BrowserRouter> */}
+    /* <BrowserRouter>
+    <Routes>
+<Route path="/" element={<List />} />
+<Route path="/slots" element={<Slots />} />
+</Routes>
+</BrowserRouter>  */
   );
 }
 

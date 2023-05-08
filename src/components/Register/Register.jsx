@@ -84,6 +84,7 @@ const Register = () => {
 	</div> */}
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
+          <h1>myRationApp</h1>
             <h1>Create New Account</h1>
             {/* <span>or use your account</span> */}
             <input

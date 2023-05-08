@@ -32,12 +32,22 @@ h2 {
 	text-align: center;
 }
 
+.appHead h1{
+font-style: italic;
+color: #00000094;
+
+}
+
 p {
 	font-size: 14px;
 	font-weight: 100;
 	line-height: 20px;
 	letter-spacing: 0.5px;
 	margin: 20px 0 30px;
+}
+
+.forgot_password{
+	padding: 10px;
 }
 
 span {
@@ -277,6 +287,5 @@ form{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 75px;
 	width: 90%;
 }

@@ -71,6 +71,7 @@ const Login = () => {
 	</div> */}
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
+          <div className="appHead"><h1>myRationApp</h1></div>
             <h1>Sign in</h1>
             {/* <span>or use your account</span> */}
             {errors.email && <p className="error">{errors.email}</p>}
@@ -90,7 +91,7 @@ const Login = () => {
             <p>
               Dont have an Account? <a href="/register">Create New</a>
             </p>
-            <a href="#">Forgot your password?</a>
+            <a href="#" className="forgot_password">Forgot your password?</a>
             <button type="submit" className="hover-btn">
               Login
             </button>
@@ -108,7 +109,7 @@ const Login = () => {
               </button>
             </div>
             <div class="overlay-panel overlay-right">
-              <h1>Hello, Friend!</h1>
+              <h1>Welcome Back!</h1>
               <p>Enter your personal details and start journey with us</p>
             </div>
           </div>
