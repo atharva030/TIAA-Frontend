@@ -482,27 +482,41 @@ const List = () => {
                     </select>
                   </div>
                   <div className="lsOptionItem">
-                    <span className="lsOptionText">Ration Mfg</span>
-                    <input
-                      type="date"
-                      onChange={(e) => {
-                        setFormData({ ...formData, rationMfg: e.target.value });
-                      }}
-                      name=""
-                      id=""
-                    />
-                  </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">Ration Exp</span>
-                    <input
-                      type="date"
-                      onChange={(e) => {
-                        setFormData({ ...formData, rationExp: e.target.value });
-                      }}
-                      name=""
-                      id=""
-                    />
-                  </div>
+  <span className="lsOptionText">Ration Mfg</span>
+  <input
+    type="date"
+    onChange={(e) => {
+      const mfgDate = e.target.value;
+      const expDate = formData.rationExp;
+      if (expDate && mfgDate > expDate) {
+        alert("Ration Mfg date should be less than Ration Exp date");
+      } else {
+        setFormData({ ...formData, rationMfg: mfgDate });
+      }
+    }}
+    name=""
+    id=""
+    value={formData.rationMfg}
+  />
+</div>
+<div className="lsOptionItem">
+  <span className="lsOptionText">Ration Exp</span>
+  <input
+    type="date"
+    onChange={(e) => {
+      const expDate = e.target.value;
+      const mfgDate = formData.rationMfg;
+      if (mfgDate && mfgDate > expDate) {
+        alert("Ration Mfg date should be less than Ration Exp date");
+      } else {
+        setFormData({ ...formData, rationExp: expDate });
+      }
+    }}
+    name=""
+    id=""
+    value={formData.rationExp}
+  />
+</div> 
                   <div className="lsOptionItem">
                     <span className="lsOptionText">Event Date</span>
                     <input
