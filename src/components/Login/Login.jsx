@@ -43,6 +43,7 @@ const Login = () => {
         //save auth-token and redirect
         localStorage.setItem("token", json.authToken);
         localStorage.setItem("role", json.userRole);
+        localStorage.setItem("userId", json.data.user.id);
         alert("You are successfully Logged in!");
         navigate("/home");
       } else {
@@ -90,7 +91,7 @@ const Login = () => {
             <p>
               Dont have an Account? <a href="/register">Create New</a>
             </p>
-            <a href="#">Forgot your password?</a>
+            {/* <a href="#">Forgot your password?</a> */}
             <button type="submit" className="hover-btn">
               Login
             </button>

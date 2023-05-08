@@ -7,6 +7,8 @@ import SearchItem from "../../components/searchItem/SearchItem";
 import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
 const List = () => {
   const cities = [
     {
@@ -97,38 +99,59 @@ const List = () => {
     rationType: [],
     rationDetails: [],
     rationSchedule: "",
-    rationAllocate: "",
-    rationStock: "",
+    rationAllocate: 0,
+    rationStock: 0,
     rationProvider: "",
     rationMfg: "",
     rationExp: "",
     location: "",
     eventDate: "",
-    rationSlots:""
+    // rationSlots:""
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    const response = await fetch(`http://localhost:5001/api/events/addevent`, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: JSON.stringify(formData), // body data type must match "Content-Type" header
-    });
-    const addedEvent = await response.json();
-    console.log("Backend Message",addedEvent)
-    // setNotes(notes.concat(note)); //concat returns an array whereas push updates an array
-    // setLoader(false);
+    try {
+      const response = await fetch(`http://localhost:5001/api/events/addevent`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(formData), // body data type must match "Content-Type" header
+      });
+      const addedEvent = await response.json();
+      console.log("Backend Message", addedEvent);
+    } catch (error) {
+      console.error(error);
+    }
+    
   };
 
   console.log("List Component", selectDate);
 
-  const bookSlot = () => {
-    console.log(slot);
+  const bookSlot = async () => {
+    // console.log(slot);
     // console.log("presses")
+    console.log(slot)
+    const idUser = localStorage.getItem("userId");
+    const response = await fetch(`http://localhost:5001/api/events/${idUser}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ eventId: slot }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      console.log("Event updated successfully", data);
+    } else {
+      console.error("Event update failed", data);
+    }
   };
   const getEvents = async () => {
     // setLoader(true);
@@ -211,7 +234,7 @@ const List = () => {
                       options={["Wheat", "Rice", "Sugar", "Oil", "Tarmaric"]}
                     />
                   </div>
-                  <div className="lsOptionItem">
+                  {/* <div className="lsOptionItem">
                     <span className="lsOptionText">Number of Slots</span>
                     <input
                       type="text"
@@ -223,7 +246,7 @@ const List = () => {
                         });
                       }}
                     />
-                  </div>
+                  </div> */}
                   <div className="lsOptionItem">
                     <span className="lsOptionText">Organisation name</span>
                     <input
@@ -274,24 +297,17 @@ const List = () => {
                   </div>
                   <div className="lsOptionItem">
                     <span className="lsOptionText">Ration Stock</span>
-                    <select
-                      value={formData.rationStock}
+                    <input
+                      type="input"
                       onChange={(e) => {
                         setFormData({
                           ...formData,
                           rationStock: e.target.value,
                         });
                       }}
-                    >
-                      <option value="">Select an option</option>
-                      {["Less than 100 Kg", "200+ Kg", "500+ Kg"].map(
-                        (option) => (
-                          <option key={option} value={option}>
-                            {option}
-                          </option>
-                        )
-                      )}
-                    </select>
+                      name=""
+                      id=""
+                    />
                   </div>
                   <div className="lsOptionItem">
                     <span className="lsOptionText">Ration Location</span>
@@ -390,6 +406,7 @@ const List = () => {
                   id={items._id}
                   setslot={setslot}
                   bookSlot={bookSlot}
+                  elderSlots={items.elderSlots}
                 />
               ))
             )}

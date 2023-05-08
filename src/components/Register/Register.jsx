@@ -25,7 +25,7 @@ const Register = () => {
     if (!password) {
       validationErrors.password = "Password is required";
     } else if (password.length < 8) {
-      validationErrors.password = "Password must be at least 8 characters long";
+      validationErrors.password = "Password must be at least 7 characters long";
     }
     setErrors(validationErrors);
     // submit form if no errors
