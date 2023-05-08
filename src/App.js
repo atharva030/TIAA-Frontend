@@ -43,29 +43,28 @@ function App() {
   };
 
   return (
-    // <BrowserRouter>
-    //   <Routes>
-    //     {/* Login page */}
-    //     <Route path="/" element={<Login />} />
-    //     {/* Register page */}
-    //     <Route path="/register" element={<Register />} />
-
-    //     {/* Other pages */}
-    //     <Route path="/home" element={<List />} />
-    //     {/* <Route path="/hotels/:id" element={<Hotel />} /> */}
-    //     <Route path="/slots" element={<Slots />} />
-    //     <Route path="/history" element={<History />} />
-    //   </Routes>
-    //   {/* Footer */}
-    //   <Footer />
-    // </BrowserRouter>
-
     <BrowserRouter>
-    <Routes>
-<Route path="/" element={<List />} />
-<Route path="/slots" element={<Slots />} />
-</Routes>
-</BrowserRouter>
+      <Routes>
+        {/* Login page */}
+        <Route path="/" element={<Login />} />
+        {/* Register page */}
+        <Route path="/register" element={<Register />} />
+
+        {/* Other pages */}
+        <Route path="/home" element={<List />} />
+        {/* <Route path="/hotels/:id" element={<Hotel />} /> */}
+        <Route path="/slots" element={<Slots />} />
+        <Route path="/history" element={<History />} />
+      </Routes>
+      {/* Footer */}
+      <Footer />
+    </BrowserRouter>
+//     <BrowserRouter>
+//     <Routes>
+// <Route path="/" element={<List />} />
+// <Route path="/slots" element={<Slots />} />
+// </Routes>
+// </BrowserRouter>
   );
 }
 
