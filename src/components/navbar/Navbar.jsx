@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navContainer">
-        <span className="logo">lamabooking</span>
+        <span className="logo">myRationApp</span>
         <div className="navItems">
           <button className="navButton"
           onClick={handleLogout}

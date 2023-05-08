@@ -1,12 +1,29 @@
 import "./searchItem.css";
-
+import Modal from "react-modal";
+import React, { useState } from "react";
 const SearchItem = (props) => {
-  const handleSlot=(id)=>{
-    props.setslot(id)
-    props.bookSlot();
-  }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleBookSlot = (id) => {
+    props.setslot(id);
+    toggleModal();
+  };
+  const [age, setAge] = useState("");
+  const handleAgeChange = (e) => {
+    setAge(e.target.value);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = { age: age };
+    console.log(data); // or send the data to the server using fetch or axios
+  };
+
   return (
-    
+
     <div className="searchItem">
 
       <div className="siDesc">
@@ -32,7 +49,22 @@ const SearchItem = (props) => {
         <div className="siDetailTexts">
           {/* <span className="siPrice">$112</span> */}
           <span className="siTaxOp">{props.rationSlots} slots are available </span>
-          {localStorage.getItem("role")==="ROLE_ADMIN"?"":<button className="siCheckButton" onClick={()=>handleSlot(props.id)}>Book Slots</button>}
+          <button className="siCheckButton" onClick={() => handleBookSlot(props.id)}>
+            Book Slots
+          </button>
+          <Modal isOpen={isModalOpen} onRequestClose={toggleModal} className="custom-modal">
+          <label htmlFor="age">Age:</label>
+          <input
+          type="number"
+          id="age"
+          name="age"
+          value={age}
+          onChange={handleAgeChange}
+          className="modal-input"
+          placeholder="Enter your age"
+        />
+          <button type="submit">Submit</button>
+          </Modal>
         </div>
       </div>
     </div>
