@@ -146,8 +146,7 @@ const Header = (props) => {
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
-              "Get Your Essentials Delivered with Ease: Introducing the New
-              Ration Distribution App"
+            Get Your Essentials Delivered with Ease: Introducing the New Ration Distribution App
             </h1>
             <p className="headerDesc">
               Get rewarded for your travels – unlock instant savings of 10% or
