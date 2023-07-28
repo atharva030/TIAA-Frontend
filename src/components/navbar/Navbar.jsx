@@ -1,26 +1,32 @@
-import "./navbar.css"
-import { Link, useNavigate } from "react-router-dom";
+import "./navbar.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Spinner from "../Spinner";
 const Navbar = () => {
-
   let navigate = useNavigate();
-
-  const handleLogout=()=>{
+  const [loader, setloader] = useState(false);
+  const handleLogout = () => {
+    setloader(true);
     localStorage.clear();
-    navigate("/")
-  }
+    navigate("/");
+    setloader(false);
+  };
   return (
     <div className="navbar">
-      <div className="navContainer">
-        <span className="logo">myRationApp</span>
-        <div className="navItems">
-          <button className="navButton"
-          onClick={handleLogout}
-          >Logout</button>
-          
+      {loader ? (
+        <Spinner />
+      ) : (
+        <div className="navContainer">
+          <span className="logo">myRationApp</span>
+          <div className="navItems">
+            <button className="navButton" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

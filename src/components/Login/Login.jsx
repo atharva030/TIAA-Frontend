@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner";
+import axios from "axios";
+import { useEffect } from "react";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [loader, setloader] = useState(false);
   let navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,82 +27,101 @@ const Login = () => {
     setErrors(validationErrors);
     // submit form if no errors
     if (Object.keys(validationErrors).length === 0) {
-      const response = await fetch(
-        `https://tiaaserver-orjetgtc0-atharva030.vercel.app/api/auth/login`,
-        {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify({
+      setloader(true);
+      try {
+        const response = await axios.post(
+          `https://tiaaserver-orjetgtc0-atharva030.vercel.app/api/auth/login`,
+          {
             email: email,
             password: password,
-          }), // body data type must match "Content-Type" header
+          }
+        );
+        const json = response.data;
+        console.log(json);
+        if (json.success) {
+          localStorage.setItem("token", json.authToken);
+          localStorage.setItem("role", json.userRole);
+          alert("You are successfully Logged in!");
+          navigate("/home");
+          setloader(false);
+        } else {
+          alert("Check Your Credentials!");
+          setloader(false);
         }
-      );
-      const json = await response.json();
-      console.log(json)
-      if (json.success) {
-        localStorage.setItem("token", json.authToken);
-        localStorage.setItem("role", json.userRole);
-        alert("You are successfully Logged in!");
-        navigate("/home");
-      } else {
-        alert("Check Your Credentials!");
+      } catch (error) {
+        console.error("Login error:", error);
+        alert("Error occurred while logging in");
+        setloader(false);
       }
     }
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Redirect to home page if the token is present
+      navigate("/home");
+    }
+  }, []);
   return (
     <div className="global-container">
-      <div class="container" id="container">
-        <div className="form-container sign-in-container">
-          <form onSubmit={handleSubmit}>
-          <div className="appHead"><h1>myRationApp</h1></div>
-            <h1>Sign in</h1>
-            {/* <span>or use your account</span> */}
-            <input
-              type="text"
-              placeholder="Email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+      {loader ? (
+        <Spinner />
+      ) : (
+        <div class="container" id="container">
+          <div className="form-container sign-in-container">
+            <form onSubmit={handleSubmit}>
+              <div className="appHead">
+                <h1>myRationApp</h1>
+              </div>
+              <h1>Sign in</h1>
+              {/* <span>or use your account</span> */}
+              <input
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
               {errors.email && <h6 className="error">{errors.email}</h6>}
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            />
-            {errors.password && <h6 className="error">{errors.password}</h6>}
-            <p>
-              Dont have an Account? <a href="/register">Create New</a>
-            </p>
-            {/* <a href="#">Forgot your password?</a> */}
-            <button type="submit" className="hover-btn">
-              Login
-            </button>
-          </form>
-        </div>
-        <div className="overlay-container">
-          <div class="overlay">
-            <div class="overlay-panel overlay-left">
-              <h1>Welcome Back!</h1>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              {errors.password && <h6 className="error">{errors.password}</h6>}
               <p>
-                To keep connected with us please login with your personal info
+                Dont have an Account? <a href="/register">Create New</a>
               </p>
-              <button class="ghost" id="signIn">
-                Sign In
+              {/* <a href="#">Forgot your password?</a> */}
+              <button type="submit" className="hover-btn">
+                Login
               </button>
-            </div>
-            <div class="overlay-panel overlay-right">
-              <h1>Welcome Back!</h1>
-              <p>Introducing our Ration Distribution System! Manage your ration supplies with ease using our inventory tracking feature. Say goodbye to food waste and hello to hassle-free meal management. Get started today!</p>
+            </form>
+          </div>
+          <div className="overlay-container">
+            <div class="overlay">
+              <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>
+                  To keep connected with us please login with your personal info
+                </p>
+                <button class="ghost" id="signIn">
+                  Sign In
+                </button>
+              </div>
+              <div class="overlay-panel overlay-right">
+                <h1>Welcome Back!</h1>
+                <p>
+                  Introducing our Ration Distribution System! Manage your ration
+                  supplies with ease using our inventory tracking feature. Say
+                  goodbye to food waste and hello to hassle-free meal
+                  management. Get started today!
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

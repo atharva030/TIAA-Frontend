@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
+import Spinner from "../Spinner";
+import axios from "axios";
 const Register = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -8,6 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [role, setRole] = useState("");
+  const [loader, setloader] = useState(false)
   const handleSubmit = async (event) => {
     event.preventDefault();
     // validate email and password
@@ -30,33 +33,34 @@ const Register = () => {
     setErrors(validationErrors);
     // submit form if no errors
     if (Object.keys(validationErrors).length === 0) {
-      console.log(JSON.stringify({ name, email, password, role }));
-      const response = await fetch(
-        `https://tiaaserver-orjetgtc0-atharva030.vercel.app/api/auth/createuser`,
-        {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
-          headers: {
-            "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify({
+      setloader(true);
+      try {
+        const response = await axios.post(
+          `https://tiaaserver-orjetgtc0-atharva030.vercel.app/api/auth/createuser`,
+          {
             name: name,
             email: email,
             password: password,
             userRole: role,
             selectedEvent: false,
-          }), // body data type must match "Content-Type" header
+          }
+        );
+        const json = response.data;
+        console.log(json);
+        if (json.success) {
+          //save auth-token and redirect
+          localStorage.setItem("token", json.authToken);
+          alert("You are successfully Registered");
+          navigate("/");
+          setloader(false)
+        } else {
+          alert("Check Your Credentials!");
+          setloader(false)
         }
-      );
-      const json = await response.json();
-      console.log(json);
-      if (json.success) {
-        //save auth-token and redirect
-        localStorage.setItem("token", json.authToken);
-        alert("You are successfully Registered");
-        navigate("/");
-      } else {
-        alert("Check Your Credentials!");
+      } catch (error) {
+        console.error("Error occurred:", error);
+        alert("An error occurred. Please try again later.");
+        setloader(false)
       }
     }
   };
@@ -66,22 +70,8 @@ const Register = () => {
 
   return (
     <div className="global-container">
-      <div class="container" id="container">
-        {/* <div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
-			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
-		</form>
-	</div> */}
+     {loader?<Spinner/>: <div class="container" id="container">
+ 
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
             <h1>Create New Account</h1>
@@ -141,7 +131,7 @@ const Register = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };

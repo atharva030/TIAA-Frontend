@@ -6,7 +6,8 @@ import SearchItem from "../../components/searchItem/SearchItem";
 import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
+import Spinner from "../../components/Spinner";
 const List = () => {
   const cities = [
     {
@@ -92,6 +93,7 @@ const List = () => {
   const [slot, setslot] = useState("");
   const [selectLocation, setselectLocation] = useState("");
   let navigate = useNavigate();
+  const [loader, setloader] = useState(false)
   const [formData, setFormData] = useState({
     organisationName: "",
     rationType: [],
@@ -109,22 +111,23 @@ const List = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    setloader(true)
     try {
-      const response = await fetch(
-        `https://tiaaserver.vercel.app/api/event/addevent`,
+      const response = await axios.post(
+        "https://tiaaserver.vercel.app/api/event/addevent",
+        formData,
         {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: JSON.stringify(formData), // body data type must match "Content-Type" header
         }
       );
-      const addedEvent = await response.json();
+      const addedEvent = response.data;
       console.log("Backend Message", addedEvent);
+      setloader(false)
     } catch (error) {
+      setloader(false)
       console.error(error);
     }
   };
@@ -132,50 +135,83 @@ const List = () => {
   // console.log("List Component", selectDate);
 
   const bookSlot = async () => {
-    // console.log(slot);
-    // console.log("presses")
     console.log(slot);
     const idUser = localStorage.getItem("userId");
-    const response = await fetch(
-      `https://tiaaserver.vercel.app/api/event/${idUser}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify({ eventId: slot }),
+    setloader(true)
+    try {
+      const response = await axios.patch(
+        `https://tiaaserver.vercel.app/api/event/${idUser}`,
+        { eventId: slot },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log("Event updated successfully", response.data);
+        alert("Successfully added to the database");
+        setloader(false)
+      } else {
+        console.error("Event update failed", response.data);
+        alert("You have already registered for an event");
+        setloader(false)
       }
-    );
+    } catch (error) {
+      setloader(false)
+      console.error("Error updating event:", error);
+    }
+  };
+  const getFilterEvents = async (selDate, place) => {
+    try {
+      setloader(true)
+      const response = await axios.get(
+        `https://tiaaserver.vercel.app/api/event/getevents`,
+        {
+          params: {
+            eventDate: selDate,
+            location: place,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const data = await response.json();
-
-    if (response.ok) {
-      console.log("Event updated successfully", data);
-      alert("Successfully added to the database");
-    } else {
-      console.error("Event update failed", data);
-      alert("You have already registered for an event");
+      const json = response.data;
+      setStatus(json);
+      setloader(false)
+    } catch (error) {
+      setloader(false)
+      console.error("Error fetching filtered events:", error);
     }
   };
   const getEvents = async () => {
-    // setLoader(true);
-    console.log(selectDate, selectLocation);
-    const location = selectLocation;
-    const response = await fetch(
-      `https://tiaaserver.vercel.app/api/event/getevents?eventDate=${selectDate}&location=${location}`,
-      {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
-        headers: {
-          "Content-Type": "application/json",
-          // "auth-token": localStorage.getItem("token"),
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }
-    );
-    const json = await response.json();
-    setStatus(json);
-    // setLoader(false);
+    try {
+      setloader(true)
+      const location = selectLocation;
+      const response = await axios.get(
+        `https://tiaaserver.vercel.app/api/event/getevents`,
+        {
+          params: {
+            eventDate: selectDate,
+            location: location,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const json = response.data;
+      setStatus(json);
+      setloader(false)
+    } catch (error) {
+      setloader(false)
+      console.error("Error fetching events:", error);
+    }
   };
 
   useEffect(() => {
@@ -195,8 +231,9 @@ const List = () => {
         setselectLocation={setselectLocation}
         setselectDate={setselectDate}
         getEvents={getEvents}
+        getFilterEvents={getFilterEvents}
       />
-      <div className="listContainer">
+     { loader? <Spinner/> :<div className="listContainer">
         <div className="listWrapper">
           {localStorage.getItem("role") === "ROLE_USER" ? (
             ""
@@ -419,7 +456,7 @@ const List = () => {
             )}
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 };

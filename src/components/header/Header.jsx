@@ -96,18 +96,18 @@ const Header = (props) => {
     },
   ];
 
-  const { type, setselectLocation, setselectDate, getEvents } = props;
+  const { type, setselectLocation, setselectDate, getEvents,getFilterEvents } = props;
   const [location, setLocation] = useState("");
   const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
 
   const handleSearch = () => {
-    console.log("Location: ", location);
+    console.log("Location displaed: ", location);
+    console.log("Date displaed: ", date);
     setselectLocation(location);
     setselectDate(date);
 
-    console.log("Date", date);
     // console.log("",location)
-    getEvents();
+    getFilterEvents(date,location);
   };
 
   return (

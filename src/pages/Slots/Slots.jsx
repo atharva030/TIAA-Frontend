@@ -8,9 +8,9 @@ import {
   faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 export default function Slots(props) {
-  const { type, setselectLocation, setselectDate, getEvents } = props;
+  const { type} = props;
 
   return (
     <>
