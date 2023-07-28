@@ -10,9 +10,9 @@
       <div className="searchItem">
 
         <div className="siDesc">
-          <h1 className="siTitle">{props.organisationName}</h1>
-          <span className="siDistance">{props.rationType}</span>
-          <span className="siTaxiOp">Time: {props.rationSchedule}</span>
+          <h1 className="siTitle">Event Name: {props.organisationName}</h1>
+          <span className="siDistance">Eligible Ration Cards: {props.rationType}</span>
+          <span className="siTaxiOp">Schedule Date: {props.rationSchedule}</span>
           <span className="siSubtitle">
             Ration Provider: {props.rationProvider}
           </span>

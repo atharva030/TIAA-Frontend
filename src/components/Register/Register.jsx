@@ -13,7 +13,7 @@ const Register = () => {
     // validate email and password
     const validationErrors = {};
     if (!name) {
-      validationErrors.password = "Name is required";
+      validationErrors.name = "Name is required";
     } else if (name.length < 8) {
       validationErrors.name = "name must be at least 5 characters long";
     }
@@ -32,7 +32,7 @@ const Register = () => {
     if (Object.keys(validationErrors).length === 0) {
       console.log(JSON.stringify({ name, email, password, role }));
       const response = await fetch(
-        `http://localhost:5001/api/auth/createuser`,
+        `https://tiaaserver-orjetgtc0-atharva030.vercel.app/api/auth/createuser`,
         {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           headers: {

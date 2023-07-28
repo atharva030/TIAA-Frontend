@@ -24,7 +24,7 @@ const Login = () => {
     // submit form if no errors
     if (Object.keys(validationErrors).length === 0) {
       const response = await fetch(
-        `http://localhost:5001/api/auth/login`,
+        `https://tiaaserver-orjetgtc0-atharva030.vercel.app/api/auth/login`,
         {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           headers: {
@@ -40,10 +40,8 @@ const Login = () => {
       const json = await response.json();
       console.log(json)
       if (json.success) {
-        //save auth-token and redirect
         localStorage.setItem("token", json.authToken);
         localStorage.setItem("role", json.userRole);
-        localStorage.setItem("userId", json.data.user.id);
         alert("You are successfully Logged in!");
         navigate("/home");
       } else {
@@ -55,40 +53,25 @@ const Login = () => {
   return (
     <div className="global-container">
       <div class="container" id="container">
-        {/* <div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			<div class="social-container">
-				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-			</div>
-			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
-		</form>
-	</div> */}
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
           <div className="appHead"><h1>myRationApp</h1></div>
             <h1>Sign in</h1>
             {/* <span>or use your account</span> */}
-            {errors.email && <p className="error">{errors.email}</p>}
             <input
               type="text"
               placeholder="Email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-            />
+              />
+              {errors.email && <h6 className="error">{errors.email}</h6>}
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />
-            {errors.password && <p className="error">{errors.password}</p>}
+            {errors.password && <h6 className="error">{errors.password}</h6>}
             <p>
               Dont have an Account? <a href="/register">Create New</a>
             </p>
@@ -111,7 +94,7 @@ const Login = () => {
             </div>
             <div class="overlay-panel overlay-right">
               <h1>Welcome Back!</h1>
-              <p>Enter your personal details and start journey with us</p>
+              <p>Introducing our Ration Distribution System! Manage your ration supplies with ease using our inventory tracking feature. Say goodbye to food waste and hello to hassle-free meal management. Get started today!</p>
             </div>
           </div>
         </div>

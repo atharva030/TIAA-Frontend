@@ -2,12 +2,10 @@ import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useState, useEffect } from "react";
-import { format } from "date-fns";
 import SearchItem from "../../components/searchItem/SearchItem";
 import Multiselect from "multiselect-react-dropdown";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
 
 const List = () => {
   const cities = [
@@ -88,7 +86,7 @@ const List = () => {
       towns: ["Nanded", "Mudkhed", "Bhokar", "Mukhed"],
     },
   ];
-  const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
+  // const [date, setDate] = useState(format(new Date(), "dd MMM yyyy"));
   const [status, setStatus] = useState([]);
   const [selectDate, setselectDate] = useState("");
   const [slot, setslot] = useState("");
@@ -112,51 +110,60 @@ const List = () => {
     e.preventDefault();
     console.log(formData);
     try {
-      const response = await fetch(`http://localhost:5001/api/events/addevent`, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: JSON.stringify(formData), // body data type must match "Content-Type" header
-      });
+      const response = await fetch(
+        `https://tiaaserver.vercel.app/api/event/addevent`,
+        {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: JSON.stringify(formData), // body data type must match "Content-Type" header
+        }
+      );
       const addedEvent = await response.json();
       console.log("Backend Message", addedEvent);
     } catch (error) {
       console.error(error);
     }
-    
   };
 
-  console.log("List Component", selectDate);
+  // console.log("List Component", selectDate);
 
   const bookSlot = async () => {
     // console.log(slot);
     // console.log("presses")
-    console.log(slot)
+    console.log(slot);
     const idUser = localStorage.getItem("userId");
-    const response = await fetch(`http://localhost:5001/api/events/${idUser}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ eventId: slot }),
-    });
+    const response = await fetch(
+      `https://tiaaserver.vercel.app/api/event/${idUser}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ eventId: slot }),
+      }
+    );
 
     const data = await response.json();
 
     if (response.ok) {
       console.log("Event updated successfully", data);
+      alert("Successfully added to the database");
     } else {
       console.error("Event update failed", data);
+      alert("You have already registered for an event");
     }
   };
   const getEvents = async () => {
     // setLoader(true);
+    console.log(selectDate, selectLocation);
+    const location = selectLocation;
     const response = await fetch(
-      `http://localhost:5001/api/events/getevents?eventDate=${selectDate}&location=${selectLocation}`,
+      `https://tiaaserver.vercel.app/api/event/getevents?eventDate=${selectDate}&location=${location}`,
       {
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -196,9 +203,9 @@ const List = () => {
           ) : (
             <form className="listSearch" onSubmit={handleSubmit}>
               <h1 className="lsTitle">Search</h1>
-              <div className="lsItem">
+              {/* <div className="lsItem">
                 <label>Destination</label>
-              </div>
+              </div> */}
 
               <div className="lsItem">
                 <div className="lsOptions">
@@ -248,7 +255,7 @@ const List = () => {
                     />
                   </div> */}
                   <div className="lsOptionItem">
-                    <span className="lsOptionText">Organisation name</span>
+                    <span className="lsOptionText">Event name</span>
                     <input
                       type="text"
                       id="organisationName"
@@ -298,7 +305,7 @@ const List = () => {
                   <div className="lsOptionItem">
                     <span className="lsOptionText">Ration Stock</span>
                     <input
-                      type="input"
+                      type="number"
                       onChange={(e) => {
                         setFormData({
                           ...formData,
@@ -343,8 +350,8 @@ const List = () => {
                       }}
                     >
                       <option value="">Select an option</option>
-                      <option value="Adwait Sharma">Adwait Sharma</option>
-                      <option value="Nagpur">Nagpur</option>
+                      <option value="Adwait Sharma">Test Provider 1</option>
+                      <option value="Test Provider 2">Test Provider 2</option>
                     </select>
                   </div>
                   <div className="lsOptionItem">
@@ -382,7 +389,7 @@ const List = () => {
                   </div>
                 </div>
               </div>
-              <button>Search</button>
+              <button>Submit</button>
             </form>
           )}
           <div className="listResult">
